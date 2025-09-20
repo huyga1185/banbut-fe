@@ -6,12 +6,11 @@ const router = new createBrowserRouter([
     {
         path: "/",
         Component: App,
-        children: [
-            {
-                path: "/auth/login",
-                Component:Login
-            }
-        ]
+        children: []
+    },
+    {
+        path: "/auth/login",
+        Component:Login
     }
 ]);
 

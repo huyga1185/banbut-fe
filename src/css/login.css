@@ -37,3 +37,6 @@
     font-weight: bold;
 }
 
+.welcome_label {
+    line-height: 48px;
+}
