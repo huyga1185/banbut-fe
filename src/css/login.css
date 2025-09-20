@@ -1,0 +1,39 @@
+.login{
+    height: 100vh;
+}
+
+.login_card{
+    border-radius: 25px;
+}
+
+.sign_up_btn {
+    background-color: transparent;
+    /* color: rgb(168, 199, 255); */
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+.sign_up_btn:hover {
+    background-color: rgba(200, 200, 200, 0.2);
+    /* color: rgb(168, 199, 255); */
+    transition: 0.2s;
+    font-weight: bold;
+}
+
+.log_in_btn {
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+
+.show_password_label {
+    /* color: rgb(168, 199, 255); */
+    font-weight: bold;
+}
+
+.forgot_password {
+    text-decoration: none;
+    /* color: rgb(168, 199, 255); */
+    font-weight: bold;
+}
+
