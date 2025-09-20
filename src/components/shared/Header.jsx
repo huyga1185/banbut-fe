@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Header() {
     return (
-        <div className="">
+        <div className="shadow-sm">
         <div className="container mb-3">
             <div className="d-flex justify-content-between align-items-center mb-2">
                 <button className="btn_menu d-lg-none d-md-block" type="button" data-bs-toggle='collapse' data-bs-target='#collapse-items'   aria-expanded="false" aria-controls="collapse-items">
@@ -15,21 +15,21 @@ function Header() {
                     <Link to='/' className='nav_brand fs-2 fw-bold'>Lorem Ipsum</Link>
                 </div>
                 <div className="">
-                    <div className="d-flex justify-content-end h-100 align-items-center">
-                        <form className="me-2 d-none d-lg-flex">
-                            <input type="text" id="search-input" className='input_search fs-5 p-1' placeholder='Bạn muốn tìm kiếm gì?'/>
-                            <button className="btn_search p-1">
+                    <div className="d-flex justify-content-end h-100 align-items-center me-3">
+                        <form className="me-3 mt-2 d-none d-lg-flex">
+                            <input type="text" id="search-input" className='input_search fs-5 p-1 ps-3' placeholder='Bạn muốn tìm kiếm gì?'/>
+                            <button className="btn_search p-1 pe-3">
                                 <i class="bi bi-search fs-5"></i>
                             </button>
                         </form>
-                        <button type='button' className='btn_search_standalone me-2 d-lg-none d-flex'>
-                            <i class="bi bi-search fs-3"></i>
+                        <button type='button' className='btn_search_standalone mt-1 me-3 d-lg-none d-flex'>
+                            <i class="bi bi-search fs-4"></i>
                         </button>
-                        <Link to='#' className='icon_w_link me-2'>
+                        <Link to='#' className='icon_w_link me-3 mt-1'>
                             <i class="bi bi-bag fs-3"></i>
                         </Link>
-                        <Link to='/auth/login' className='icon_w_link'>
-                            <i class="bi bi-person fs-3"></i>
+                        <Link to='/auth/login' className='icon_w_link mt-2'>
+                            <i class="bi bi-person fs-2"></i>
                         </Link>
                     </div>
                 </div>

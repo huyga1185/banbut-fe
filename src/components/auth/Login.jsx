@@ -36,7 +36,7 @@ function Login() {
                                     <Link to="#" className='forgot_password'>Bạn quên tài khoản hoặc mật khẩu?</Link>
                                 </div>
                                 <div className="d-flex justify-content-between justify-content-lg-end">
-                                    <button type='button' className='btn sign_up_btn me-2 ps-2 pe-2 ps-lg-4 pe-lg-4 pt-2 pt-2'>Tạo tài khoản</button>
+                                    <Link to='/user/register' className='btn sign_up_btn me-2 ps-2 pe-2 ps-lg-4 pe-lg-4 pt-2 pt-2'>Tạo tài khoản</Link>
                                     <button type='button' className='btn btn-primary log_in_btn pe-2 ps-2 ps-lg-4 pe-lg-4 pt-2 pb-2'>Đăng nhập</button>
                                 </div>
                             </form>

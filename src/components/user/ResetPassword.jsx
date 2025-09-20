@@ -3,7 +3,7 @@ import '../../css/register.css';
 import demo_logo from '../../assets/logo-demo.png';
 import { Link, Outlet } from 'react-router-dom';
 
-function Register() {
+function ResetPassword() {
     return (
         <div>
             <Outlet/>
@@ -11,4 +11,4 @@ function Register() {
     );
 }
 
-export default Register;
+export default ResetPassword;
