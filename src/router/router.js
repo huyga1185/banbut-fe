@@ -6,12 +6,23 @@ import Email from "../components/user/Email.jsx";
 import Credential from "../components/user/Credential.jsx";
 import ResetPassword from "../components/user/ResetPassword.jsx";
 import FindEmail from "../components/user/FindEmail.jsx";
+import ChangePassword from "../components/user/ChangePassword.jsx";
+import Index from "../components/Index.jsx";
 
 const router = new createBrowserRouter([
     {
         path: "/",
         Component: App,
-        children: []
+        children: [
+            {
+                path: "index",
+                Component: Index
+            }, 
+            {
+                index: true,
+                Component: Index
+            }
+        ]
     },
     {
         path: "/auth/login",
@@ -42,6 +53,10 @@ const router = new createBrowserRouter([
             {
                 path:'find-email',
                 Component: FindEmail
+            },
+            {
+                path:'change-password',
+                Component: ChangePassword
             },
             {
                 index: true,
