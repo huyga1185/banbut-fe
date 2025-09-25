@@ -7,6 +7,8 @@ import { useEffect, useState } from 'react';
 
 function Header() {
     const [open, setOpen] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
+    const [menuClosed, setMenuClosed] = useState(true);
     const [products, setProducts] = useState([
         {
         name : 'product a',
@@ -39,12 +41,22 @@ function Header() {
         isClosed(false);
     }
 
+    const handleMenuOpen = () => {
+        setMenuOpen(true);
+        setMenuClosed(false);
+    }
+
+    const handleMenuClose = () => {
+        setMenuOpen(false);
+        setTimeout(() => setMenuClosed(true), 200);
+    }
+
     return (
         <div className='main'>
             <div className="shadow-sm pb-2" >
                 <div className="container">
                     <div className="d-flex justify-content-between align-items-center mb-2">
-                        <button className="btn_menu d-lg-none d-md-block" type="button" data-bs-toggle='collapse' data-bs-target='#collapse-items'   aria-expanded="false" aria-controls="collapse-items">
+                        <button className="btn_menu d-lg-none d-md-block" type="button" onClick={handleMenuOpen} >
                             <i class="bi bi-list fs-3"></i>
                         </button>
                         <div className="d-flex">
@@ -79,13 +91,13 @@ function Header() {
                         <Link to="#" className="category_link me-2">Bút ký</Link>
                         <Link to="#" className="category_link me-2">Bút chì</Link>  
                     </div>
-                    <div className="nav collapse flex-column" id='collapse-items'>
-                        <Link to="#" className="category_link me-2 mt-1 mb-1">Bút máy</Link>
-                        <Link to="#" className="category_link me-2 mt-1 mb-1">Bút bi</Link>
-                        <Link to="#" className="category_link me-2 mt-1 mb-1">Bút chì</Link>
-                        <Link to="#" className="category_link me-2 mt-1 mb-1">Bút ký</Link>
-                    </div>
                 </div>
+            </div>
+            <div className={`menu_wrapper ${ menuOpen ? 'menu_open_animation' : 'menu_close_animation' } ${ menuClosed ? 'd-none' : '' } `}>
+                <Link to="#" className="category_link me-2 mt-1 mb-1">Bút máy</Link>
+                <Link to="#" className="category_link me-2 mt-1 mb-1">Bút bi</Link>
+                <Link to="#" className="category_link me-2 mt-1 mb-1">Bút chì</Link>
+                <Link to="#" className="category_link me-2 mt-1 mb-1">Bút ký</Link>
             </div>
             <div className={`bag_wrapper ${ open && screen.width >= 992 ? 'open_bag_animation' : 'close_bag_animation'} ${ screen.width < 992 ? 'd-none' : '' } ${ closed ? 'd-none' : '' }`}>
                 <div className='bag'>
@@ -106,27 +118,60 @@ function Header() {
                                 </button>
                             </div>
                         ): (
-                            <div className='bag_items'>
-                                <div className="bag_item">
-                                    <img src="https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4" alt="product img" className='product_image'/>
-                                    <div className="product_info">
-                                        <h5 className='product_name'>Product name</h5>
-                                        <p>color: red, tip: 0.5mm</p>
-                                        <div className="product_info_footer">
-                                            <p className='product_price'>20000vnd</p>
-                                            <div className="product_quantity_form">
-                                                <button type='button' className='btn_plus_product'>
-                                                    <i className="bi bi-plus"></i>
-                                                </button>
-                                                <p className='product_quantity'>1</p>
-                                                <button type='button' className='btn_minus_product'>
-                                                    <i className="bi bi-dash"></i>
-                                                </button>
-                                            </div>    
+                            <>
+                                <div className='bag_items'>
+                                    { products.map(product => (
+                                            <div className="bag_item">
+                                                <img src={product.img} alt="product img" className='product_image'/>
+                                                <div className="product_info">
+                                                    <h5 className='product_name'>{product.name}</h5>
+                                                    <p>{"color: " + product.name + ", tip: " + product.tip}</p>
+                                                    <div className="product_info_footer">
+                                                        <p className='product_price'>{product.totalprice + "vnd"}</p>
+                                                        <div className="product_quantity_form">
+                                                            <button type='button' className='btn_plus_product'>
+                                                                <i className="bi bi-plus"></i>
+                                                            </button>
+                                                            <p className='product_quantity'>{product.quantity}</p>
+                                                            <button type='button' className='btn_minus_product'>
+                                                                <i className="bi bi-dash"></i>
+                                                            </button>
+                                                        </div>    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))
+                                    }
+                                </div>
+                                <div className="desktop_bag_items_footer">
+                                <p className='bag_items_footer_header'>MÃ GIẢM GIÁ</p>
+                                <div className="discount_code_wrapper">
+                                    <div className='form-floating w-100'>
+                                        <input type="text" className='form-control' id='discountcode' placeholder=''/>
+                                        <label htmlFor="discountcode">Nhập mã của bạn</label>
+                                    </div>
+                                    <button typpe='button' className='btn_submit_discount_code'>Áp dụng</button>
+                                </div>
+                                <div className="order_summary_wrapper">
+                                    <p className="order_summary_header">TÓM TẮT ĐƠN HÀNG</p>
+                                    <div className="order_summary_body">
+                                        <div className="total_product_price">
+                                            <label className="total_products_price_label">Giá trị đơn hàng</label>
+                                            <p className='value'>20000vnd</p>
+                                        </div>
+                                        <div className="shipping_fee">
+                                            <lable className="shipping_fee_label">Phí vận chuyển</lable>
+                                            <p className='value'>2000vnd</p>
+                                        </div>
+                                        <div className="total_price">
+                                            <label className="total_price_label">Tổng giá trị đơn hàng</label>
+                                            <p className="total_value">22000vnd</p>
                                         </div>
                                     </div>
                                 </div>
+                                <button type='button' className='order_button'>Đặt hàng </button>
                             </div>
+                        </>
                         )}
                     </div>
                 </div>
@@ -152,169 +197,64 @@ function Header() {
                         ): (
                             <div className='bag_items_wrapper'>
                                 <div className='bag_items_mobile'>
-                                    <div className="bag_item">
-                                        <img src="https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4" alt="product img" className='product_image'/>
-                                        <div className="product_info">
-                                            <h5 className='product_name'>Product name namenamenamenamenamenamenamenamenamenamenamenamename </h5>
-                                            <p>color: red, tip: 0.5mm</p>
-                                            <div className="product_info_footer">
-                                                <p className='product_price'>20000vnd</p>
-                                                <div className="product_quantity_form">
-                                                    <button type='button' className='btn_plus_product'>
-                                                        <i className="bi bi-plus"></i>
-                                                    </button>
-                                                    <p className='product_quantity'>1</p>
-                                                    <button type='button' className='btn_minus_product'>
-                                                        <i className="bi bi-dash"></i>
-                                                    </button>
-                                                </div>    
+                                    { products.map(product => (
+                                            <div className="bag_item">
+                                                <img src={product.img} alt="product img" className='product_image'/>
+                                                <div className="product_info">
+                                                    <h5 className='product_name'>{product.name}</h5>
+                                                    <p>{"color: " + product.name + ", tip: " + product.tip}</p>
+                                                    <div className="product_info_footer">
+                                                        <p className='product_price'>{product.totalprice + "vnd"}</p>
+                                                        <div className="product_quantity_form">
+                                                            <button type='button' className='btn_plus_product'>
+                                                                <i className="bi bi-plus"></i>
+                                                            </button>
+                                                            <p className='product_quantity'>{product.quantity}</p>
+                                                            <button type='button' className='btn_minus_product'>
+                                                                <i className="bi bi-dash"></i>
+                                                            </button>
+                                                        </div>    
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                        <div className="bag_item">
-                                        <img src="https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4" alt="product img" className='product_image'/>
-                                        <div className="product_info">
-                                            <h5 className='product_name'>Product name</h5>
-                                            <p>color: red, tip: 0.5mm</p>
-                                            <div className="product_info_footer">
-                                                <p className='product_price'>20000vnd</p>
-                                                <div className="product_quantity_form">
-                                                    <button type='button' className='btn_plus_product'>
-                                                        <i className="bi bi-plus"></i>
-                                                    </button>
-                                                    <p className='product_quantity'>1</p>
-                                                    <button type='button' className='btn_minus_product'>
-                                                        <i className="bi bi-dash"></i>
-                                                    </button>
-                                                </div>    
-                                            </div>
-                                        </div>
-                                    </div>
-                                        <div className="bag_item">
-                                        <img src="https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4" alt="product img" className='product_image'/>
-                                        <div className="product_info">
-                                            <h5 className='product_name'>Product name</h5>
-                                            <p>color: red, tip: 0.5mm</p>
-                                            <div className="product_info_footer">
-                                                <p className='product_price'>20000vnd</p>
-                                                <div className="product_quantity_form">
-                                                    <button type='button' className='btn_plus_product'>
-                                                        <i className="bi bi-plus"></i>
-                                                    </button>
-                                                    <p className='product_quantity'>1</p>
-                                                    <button type='button' className='btn_minus_product'>
-                                                        <i className="bi bi-dash"></i>
-                                                    </button>
-                                                </div>    
-                                            </div>
-                                        </div>
-                                    </div>
-                                        <div className="bag_item">
-                                        <img src="https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4" alt="product img" className='product_image'/>
-                                        <div className="product_info">
-                                            <h5 className='product_name'>Product name</h5>
-                                            <p>color: red, tip: 0.5mm</p>
-                                            <div className="product_info_footer">
-                                                <p className='product_price'>20000vnd</p>
-                                                <div className="product_quantity_form">
-                                                    <button type='button' className='btn_plus_product'>
-                                                        <i className="bi bi-plus"></i>
-                                                    </button>
-                                                    <p className='product_quantity'>1</p>
-                                                    <button type='button' className='btn_minus_product'>
-                                                        <i className="bi bi-dash"></i>
-                                                    </button>
-                                                </div>    
-                                            </div>
-                                        </div>
-                                    </div>
-                                        <div className="bag_item">
-                                        <img src="https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4" alt="product img" className='product_image'/>
-                                        <div className="product_info">
-                                            <h5 className='product_name'>Product name</h5>
-                                            <p>color: red, tip: 0.5mm</p>
-                                            <div className="product_info_footer">
-                                                <p className='product_price'>20000vnd</p>
-                                                <div className="product_quantity_form">
-                                                    <button type='button' className='btn_plus_product'>
-                                                        <i className="bi bi-plus"></i>
-                                                    </button>
-                                                    <p className='product_quantity'>1</p>
-                                                    <button type='button' className='btn_minus_product'>
-                                                        <i className="bi bi-dash"></i>
-                                                    </button>
-                                                </div>    
-                                            </div>
-                                        </div>
-                                    </div>
-                                        <div className="bag_item">
-                                        <img src="https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4" alt="product img" className='product_image'/>
-                                        <div className="product_info">
-                                            <h5 className='product_name'>Product name</h5>
-                                            <p>color: red, tip: 0.5mm</p>
-                                            <div className="product_info_footer">
-                                                <p className='product_price'>20000vnd</p>
-                                                <div className="product_quantity_form">
-                                                    <button type='button' className='btn_plus_product'>
-                                                        <i className="bi bi-plus"></i>
-                                                    </button>
-                                                    <p className='product_quantity'>1</p>
-                                                    <button type='button' className='btn_minus_product'>
-                                                        <i className="bi bi-dash"></i>
-                                                    </button>
-                                                </div>    
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="bag_item">
-                                        <img src="https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4" alt="product img" className='product_image'/>
-                                        <div className="product_info">
-                                            <h5 className='product_name'>Product name</h5>
-                                            <p>color: red, tip: 0.5mm</p>
-                                            <div className="product_info_footer">
-                                                <p className='product_price'>20000vnd</p>
-                                                <div className="product_quantity_form">
-                                                    <button type='button' className='btn_plus_product'>
-                                                        <i className="bi bi-plus"></i>
-                                                    </button>
-                                                    <p className='product_quantity'>1</p>
-                                                    <button type='button' className='btn_minus_product'>
-                                                        <i className="bi bi-dash"></i>
-                                                    </button>
-                                                </div>    
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="bag_item">
-                                        <img src="https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4" alt="product img" className='product_image'/>
-                                        <div className="product_info">
-                                            <h5 className='product_name'>Product name</h5>
-                                            <p>color: red, tip: 0.5mm</p>
-                                            <div className="product_info_footer">
-                                                <p className='product_price'>20000vnd</p>
-                                                <div className="product_quantity_form">
-                                                    <button type='button' className='btn_plus_product'>
-                                                        <i className="bi bi-plus"></i>
-                                                    </button>
-                                                    <p className='product_quantity'>1</p>
-                                                    <button type='button' className='btn_minus_product'>
-                                                        <i className="bi bi-dash"></i>
-                                                    </button>
-                                                </div>    
-                                            </div>
-                                        </div>
-                                    </div>
+                                        ))
+                                    }
                                 </div>
                                 <div className="bag_items_footer">
-                                    <button type='button' className='order_button'>Order</button>
+                                    <p className='bag_items_footer_header'>MÃ GIẢM GIÁ</p>
+                                    <div className="discount_code_wrapper">
+                                        <div className='form-floating w-100'>
+                                            <input type="text" className='form-control' id='discountcode' placeholder=''/>
+                                            <label htmlFor="discountcode">Nhập mã của bạn</label>
+                                        </div>
+                                        <button typpe='button' className='btn_submit_discount_code'>Áp dụng</button>
+                                    </div>
+                                    <div className="order_summary_wrapper">
+                                        <p className="order_summary_header">TÓM TẮT ĐƠN HÀNG</p>
+                                        <div className="order_summary_body">
+                                            <div className="total_product_price">
+                                                <label className="total_products_price_label">Giá trị đơn hàng</label>
+                                                <p className='value'>20000vnd</p>
+                                            </div>
+                                            <div className="shipping_fee">
+                                                <lable className="shipping_fee_label">Phí vận chuyển</lable>
+                                                <p className='value'>2000vnd</p>
+                                            </div>
+                                            <div className="total_price">
+                                                <label className="total_price_label">Tổng giá trị đơn hàng</label>
+                                                <p className="total_value">22000vnd</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button type='button' className='order_button'>Đặt hàng </button>
                                 </div>
                             </div>
                         )}
                     </div>
                 </div>
             </div>
-            <button type='button' className={`btn_overlay ${open ? 'btn_overlay_animation_open' : 'btn_overlay_animation_close'} ${ closed ? 'd-none' : '' }`} onAnimationEnd={(e) => { if (e.animationName == 'btn_overlay_animation_close' && !open) isClosed(true)} } onClick={() => setOpen(false)}></button>
- 
+            <button type='button' className={`btn_overlay ${menuOpen ? 'btn_overlay_animation_open' : 'btn_overlay_animation_close'} ${ menuClosed ? 'd-none' : '' }`} onClick={handleMenuClose}></button>
+            <button type='button' className={`btn_overlay ${open ? 'btn_overlay_animation_open' : 'btn_overlay_animation_close'} ${ closed ? 'd-none' : '' }`} onClick={handleClose}></button>
         </div>
     )
 }

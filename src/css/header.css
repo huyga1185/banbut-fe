@@ -30,6 +30,17 @@
     to { transform: translateY(100%); opacity: 0; }
 }
 
+@keyframes menu_open {
+    from { transform: translateX(-100%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }   
+}
+
+@keyframes menu_close {
+    from { transform: translateX(0); opacity: 1; }
+    to { transform: translateX(-100%); opacity: 0; }   
+    
+}
+
 .nav_brand {
     text-decoration: none;
     color: black;
@@ -236,14 +247,20 @@
 .bag_items_wrapper {
     display: flex;
     flex-direction: column;
-    max-width: 100%;
     min-height: 0;
     flex: 1;
 }
 
+.desktop_bag_items_footer {
+    margin-top: auto;
+    padding: 1rem 0 0 0;
+    width: 100%;
+    background-color: white;
+}
+
 .bag_items_footer {
-    flex: 0 0 auto;
-    height: 20%;
+    margin-top: auto;
+    padding: 1.5rem 0 3rem 0;
     width: 100%;
     background-color: white;
 }
@@ -255,6 +272,7 @@
     font-weight: bold;
     border-radius: 25px;
     margin-top: 1rem;
+    width: 100%;
     padding: 0.5rem 1rem .5rem 1rem;
 }
 
@@ -262,6 +280,7 @@
     display: flex;
     flex-direction: column;
     flex: 1;
+    gap: 1rem;
     padding: 0 1.5rem 0 1.5rem;
     overflow-y: scroll;
 }
@@ -331,4 +350,84 @@
 .product_quantity {
     font-size: 1rem;
     line-height: 1.5rem;
+}
+
+.discount_code_wrapper {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+}
+
+.btn_submit_discount_code {
+    border: none;
+    background-color: black;
+    color: white;
+    border-radius: 25px;
+    width: 10rem;
+    padding: 0 1rem 0 1rem;
+}
+
+.bag_items_footer_header {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.order_summary_wrapper {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.order_summary_header {
+    margin: 0;
+    width: 100%;
+    font-weight: bold;
+}
+
+.order_summary_body {
+    width: 100%;
+}
+
+.total_products_price_label,
+.shipping_fee_label {
+    color: rgba(0, 0, 0, 0.7);
+}
+
+.total_price_label {
+    font-weight: bold;
+}
+
+.total_value {
+    font-weight: bold;
+}
+
+.total_product_price,
+.shipping_fee,
+.total_price {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu_wrapper {
+    display: flex;
+    flex-direction: column;
+    background-color: white;
+    gap: 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 50vw;
+    padding: 1.5rem;
+    z-index: 101;
+}
+
+.menu_open_animation {
+    animation: menu_open 0.2s;
+}
+.menu_close_animation {
+    animation: menu_close 0.2s;
 }

@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 function Login() {
     return (
-        <div className="container">
+        <div className="container-fluid container-lg">
             <div className="d-flex align-items-center login">
                 <div className="align-items-center w-100 p-5 login_card shadow">
 
