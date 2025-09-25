@@ -114,6 +114,8 @@
 
 .bag_body {
     display: flex;
+    flex-direction: column;
+    min-height: 0;
     flex: 1;
 }
 
@@ -235,6 +237,7 @@
     display: flex;
     flex-direction: column;
     max-width: 100%;
+    min-height: 0;
     flex: 1;
 }
 
@@ -266,7 +269,6 @@
 .bag_items_mobile {
     display: flex;
     flex-direction: column;
-    /* max-width: 100%; */
     width: 100%;
     padding: 0 0.80rem 0 .80rem;
     gap: 1rem;
