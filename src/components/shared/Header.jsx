@@ -29,11 +29,39 @@ function Header() {
         img : 'https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4'
         }
     ]);
+
+    const [category, setCategory] = useState([
+        {
+            name : 'Bút máy',
+            link : '#'
+        },
+        {
+            name : 'Bút bi',
+            link : '#'
+        },
+        {
+            name : 'Bút ký',
+            link : '#'
+        },
+        {
+            name : 'Bút chì',
+            link : '#'
+        }
+    ]);
+
     const [closed, isClosed] = useState(true);
+
+    const calTotalProductsPrice = () => {
+        let total = 0;
+        products.forEach(product => {
+            total += product.totalprice;
+        });
+        return total;
+    }
 
     const handleClose = () => {
         setOpen(false);
-        setTimeout(() => isClosed(true), 200);
+        setTimeout(() => isClosed(true), 450);
     };
 
     const handleOpen = () => {
@@ -48,7 +76,7 @@ function Header() {
 
     const handleMenuClose = () => {
         setMenuOpen(false);
-        setTimeout(() => setMenuClosed(true), 200);
+        setTimeout(() => setMenuClosed(true), 450);
     }
 
     return (
@@ -86,18 +114,26 @@ function Header() {
                         </button>
                     </form>
                     <div className="nav d-none d-lg-flex">
-                        <Link to="#" className="category_link me-2">Bút máy</Link>
-                        <Link to="#" className="category_link me-2">Bút bi</Link>
-                        <Link to="#" className="category_link me-2">Bút ký</Link>
-                        <Link to="#" className="category_link me-2">Bút chì</Link>  
+                        {category.map(cat => (
+                            <div className="menu_item">
+                                <Link to={cat.link} className="desktop_category_link">{cat.name}</Link>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
             <div className={`menu_wrapper ${ menuOpen ? 'menu_open_animation' : 'menu_close_animation' } ${ menuClosed ? 'd-none' : '' } `}>
-                <Link to="#" className="category_link me-2 mt-1 mb-1">Bút máy</Link>
-                <Link to="#" className="category_link me-2 mt-1 mb-1">Bút bi</Link>
-                <Link to="#" className="category_link me-2 mt-1 mb-1">Bút chì</Link>
-                <Link to="#" className="category_link me-2 mt-1 mb-1">Bút ký</Link>
+                <div className="menu_wrapper_header">
+                    <p className='menu_title'>Menu</p>
+                    <button type="button" className='btn_close_menu' onClick={handleMenuClose}>
+                        <i className="bi bi-x-lg"></i>
+                    </button>
+                </div>
+                {category.map(cat => (
+                    <div className="menu_item">
+                        <Link to={cat.link} className="category_link">{cat.name}</Link>
+                    </div>
+                ))}
             </div>
             <div className={`bag_wrapper ${ open && screen.width >= 992 ? 'open_bag_animation' : 'close_bag_animation'} ${ screen.width < 992 ? 'd-none' : '' } ${ closed ? 'd-none' : '' }`}>
                 <div className='bag'>
@@ -157,7 +193,7 @@ function Header() {
                                     <div className="order_summary_body">
                                         <div className="total_product_price">
                                             <label className="total_products_price_label">Giá trị đơn hàng</label>
-                                            <p className='value'>20000vnd</p>
+                                            <p className='value'>{calTotalProductsPrice()}vnd</p>
                                         </div>
                                         <div className="shipping_fee">
                                             <lable className="shipping_fee_label">Phí vận chuyển</lable>
@@ -233,7 +269,7 @@ function Header() {
                                         <p className="order_summary_header">TÓM TẮT ĐƠN HÀNG</p>
                                         <div className="order_summary_body">
                                             <div className="total_product_price">
-                                                <label className="total_products_price_label">Giá trị đơn hàng</label>
+                                                <label className="total_products_price_label">{calTotalProductsPrice()}vnd</label>
                                                 <p className='value'>20000vnd</p>
                                             </div>
                                             <div className="shipping_fee">

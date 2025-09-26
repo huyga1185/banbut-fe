@@ -11,34 +11,40 @@
 }
 
 @keyframes open_bag {
-    from { transform: translateX(100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
 }
 
 @keyframes close_bag {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(100%); opacity: 0; }
+    from { transform: translateX(0); }
+    to { transform: translateX(100%); }
 }
 
 @keyframes mobile_open_bag {
-    from { transform: translateY(100%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
 }
 
 @keyframes mobile_close_bag {
-    from { transform: translateY(0); opacity: 1; }
-    to { transform: translateY(100%); opacity: 0; }
+    from { transform: translateY(0); }
+    to { transform: translateY(100%); }
 }
 
 @keyframes menu_open {
-    from { transform: translateX(-100%); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }   
+    from { transform: translateX(-100%); }
+    to { transform: translateX(0); }   
 }
 
 @keyframes menu_close {
-    from { transform: translateX(0); opacity: 1; }
-    to { transform: translateX(-100%); opacity: 0; }   
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }   
     
+}
+
+.main {
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .nav_brand {
@@ -60,19 +66,19 @@
 }
 
 .open_bag_animation {
-    animation: open_bag 0.2s;
+    animation: open_bag 0.5s;
 }
 
 .close_bag_animation {
-    animation: close_bag 0.2s;
+    animation: close_bag 0.5s;
 }
 
 .mobile_open_bag_animation {
-    animation: mobile_open_bag 0.2s;
+    animation: mobile_open_bag 0.5s;
 }
 
 .mobile_close_bag_animation {
-    animation: mobile_close_bag 0.2s;
+    animation: mobile_close_bag 0.5s;
 }
 
 .mobile_bag_wrapper {
@@ -104,12 +110,12 @@
 
 .btn_overlay_animation_open {
     animation-name: open_overlay_animation;
-    animation-duration: 0.2s;
+    animation-duration: 0.5s;
 }
 
 .btn_overlay_animation_close {
     animation-name: close_overlay_animation;
-    animation-duration: 0.2s;
+    animation-duration: 0.5s;
 }
 
 .btn_overlay {
@@ -237,11 +243,35 @@
     overflow: hidden !important;
 }
 
+.desktop_category_link {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.5);
+    flex: 0 0 auto;
+    display: -webkit-box;
+    -webkit-box-orient:vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    margin: 0 1rem 0 0;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
 .category_link {
     text-decoration: none;
     color: rgba(0, 0, 0, 0.5);
     flex: 0 0 auto;
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-box-orient:vertical;
+    overflow: hidden;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    padding: 0 2rem 0 2rem;
+    margin: 0 !important;
+    font-weight: 500;
+    font-size: 1.1rem;
 }
 
 .bag_items_wrapper {
@@ -253,7 +283,7 @@
 
 .desktop_bag_items_footer {
     margin-top: auto;
-    padding: 1rem 0 0 0;
+    padding: rem 0 0 0;
     width: 100%;
     background-color: white;
 }
@@ -295,9 +325,9 @@
 }
 
 .bag_item {
-    flex: 1;
+    width: 100%;
     display: flex;
-    gap: 0.75rem;
+    gap: 1rem;
 }
 
 .product_image {
@@ -411,6 +441,10 @@
     justify-content: space-between;
 }
 
+.menu_wrapper > * {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
 .menu_wrapper {
     display: flex;
     flex-direction: column;
@@ -421,13 +455,36 @@
     left: 0;
     height: 100vh;
     width: 50vw;
-    padding: 1.5rem;
+    /* padding: 1.5rem; */
     z-index: 101;
 }
 
+.menu_wrapper_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.5rem 2rem 0.5rem  2rem;
+}
+
+.menu_title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+.btn_close_menu {
+    border: none;
+    background-color: white;
+    font-size: 1.3rem;
+}
+
 .menu_open_animation {
-    animation: menu_open 0.2s;
+    animation: menu_open 0.5s;
 }
 .menu_close_animation {
-    animation: menu_close 0.2s;
+    animation: menu_close 0.5s;
+}
+
+.bi-bag-fill {
+    color: transparent;
 }
