@@ -29,7 +29,9 @@ function Header() {
         img : 'https://fastly.picsum.photos/id/24/4855/1803.jpg?hmac=ICVhP1pUXDLXaTkgwDJinSUS59UWalMxf4SOIWb9Ui4'
         }
     ]);
-
+    const [discountCode, setDiscountCode] = useState('');
+    const [discountValid, isDiscountValid] = useState('true');
+    const [totalProductPrice, setTotalProductPrice] = useState(0);
     const [category, setCategory] = useState([
         {
             name : 'Bút máy',
@@ -48,16 +50,37 @@ function Header() {
             link : '#'
         }
     ]);
-
-    const [closed, isClosed] = useState(true);
-
-    const calTotalProductsPrice = () => {
+    const [originalProductPrice, setOriginalProductPrice] = useState(0);
+    const [discountAmount, setDiscountAmount] = useState(0);
+    const [deliveryFee, setDeliveryFee] = useState(0);
+    const [totalOrderPrice, setTotalOrderPrice] = useState(0);
+    const [originalOrderPrice, setOriginalOrderPrice] = useState(0);
+    
+    useEffect(() => {
         let total = 0;
         products.forEach(product => {
             total += product.totalprice;
         });
-        return total;
+        setOriginalProductPrice(total)
+        setTotalProductPrice(total - (total * (discountAmount / 100)));
+        setOriginalOrderPrice(originalProductPrice + deliveryFee);
+        setTotalOrderPrice(totalProductPrice + deliveryFee);
+    }, [products, discountAmount, deliveryFee, totalProductPrice]);
+
+    const applyDiscountCode = () => {
+        if (discountCode != 'abcdef1') {
+            isDiscountValid(false);
+            return;
+        }
+        isDiscountValid(true)
+        setDiscountAmount(20);
     }
+
+    const handleDiscountInput = (e) => {
+        setDiscountCode(e.target.value);
+    }
+
+    const [closed, isClosed] = useState(true);
 
     const handleClose = () => {
         setOpen(false);
@@ -98,10 +121,10 @@ function Header() {
                                         <i className="bi bi-search fs-5"></i>
                                     </button>
                                 </form>
-                                <button type='button' className='btn_bag me-3 mt-1' onClick={handleOpen}>
+                                <button type='button' className='btn_bag me-3' onClick={handleOpen}>
                                     <i className="bi bi-bag fs-3"></i>
                                 </button>
-                                <Link to='/auth/login' className='icon_w_link mt-2'>
+                                <Link to='/auth/login' className='icon_w_link'>
                                     <i className="bi bi-person fs-2"></i>
                                 </Link>
                             </div>
@@ -183,25 +206,32 @@ function Header() {
                                 <p className='bag_items_footer_header'>MÃ GIẢM GIÁ</p>
                                 <div className="discount_code_wrapper">
                                     <div className='form-floating w-100'>
-                                        <input type="text" className='form-control' id='discountcode' placeholder=''/>
+                                        <input type="text" className='form-control' id='discountcode' value={discountCode} onChange={handleDiscountInput} placeholder=''/>
                                         <label htmlFor="discountcode">Nhập mã của bạn</label>
                                     </div>
-                                    <button typpe='button' className='btn_submit_discount_code'>Áp dụng</button>
+                                    <button type='button' className='btn_submit_discount_code' onClick={applyDiscountCode}>Áp dụng</button>
                                 </div>
+                                <p className={`${ discountValid ? 'd-none' : 'discount_code_invalid_warn'}`} >Mã giảm giá không hợp lệ!</p>
                                 <div className="order_summary_wrapper">
                                     <p className="order_summary_header">TÓM TẮT ĐƠN HÀNG</p>
                                     <div className="order_summary_body">
                                         <div className="total_product_price">
                                             <label className="total_products_price_label">Giá trị đơn hàng</label>
-                                            <p className='value'>{calTotalProductsPrice()}vnd</p>
+                                            <div className="value_wrapper">
+                                                    <p className='value'>{totalProductPrice}vnd</p>
+                                                    <p className={` ${discountAmount == 0 ? 'd-none' : 'value_before_discount' } `}>{originalProductPrice}vnd</p>
+                                            </div>
                                         </div>
                                         <div className="shipping_fee">
                                             <lable className="shipping_fee_label">Phí vận chuyển</lable>
-                                            <p className='value'>2000vnd</p>
+                                            <p className='value'>{deliveryFee}vnd</p>
                                         </div>
                                         <div className="total_price">
                                             <label className="total_price_label">Tổng giá trị đơn hàng</label>
-                                            <p className="total_value">22000vnd</p>
+                                            <div className="value_wrapper">
+                                                <p className="total_value">{totalOrderPrice}vnd</p>
+                                                <p className={` ${discountAmount == 0 ? 'd-none' : 'value_before_discount' } `}>{originalOrderPrice}vnd</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -260,25 +290,32 @@ function Header() {
                                     <p className='bag_items_footer_header'>MÃ GIẢM GIÁ</p>
                                     <div className="discount_code_wrapper">
                                         <div className='form-floating w-100'>
-                                            <input type="text" className='form-control' id='discountcode' placeholder=''/>
+                                            <input type="text" className='form-control' id='discountcode' value={discountCode} onChange={handleDiscountInput} placeholder=''/>
                                             <label htmlFor="discountcode">Nhập mã của bạn</label>
                                         </div>
-                                        <button typpe='button' className='btn_submit_discount_code'>Áp dụng</button>
+                                        <button typpe='button' className='btn_submit_discount_code' onClick={applyDiscountCode}>Áp dụng</button>
                                     </div>
+                                    <p className={`${ discountValid ? 'd-none' : 'discount_code_invalid_warn'}`} >Mã giảm giá không hợp lệ!</p>
                                     <div className="order_summary_wrapper">
                                         <p className="order_summary_header">TÓM TẮT ĐƠN HÀNG</p>
                                         <div className="order_summary_body">
                                             <div className="total_product_price">
-                                                <label className="total_products_price_label">{calTotalProductsPrice()}vnd</label>
-                                                <p className='value'>20000vnd</p>
+                                                <label className="total_products_price_label">Giá trị đơn hàng</label>
+                                                <div className="value_wrapper">
+                                                    <p className='value'>{totalProductPrice}vnd</p>
+                                                    <p className={` ${discountAmount == 0 ? 'd-none' : 'value_before_discount' } `}>{originalProductPrice}vnd</p>
+                                                </div>
                                             </div>
                                             <div className="shipping_fee">
                                                 <lable className="shipping_fee_label">Phí vận chuyển</lable>
-                                                <p className='value'>2000vnd</p>
+                                                <p className='value'>{deliveryFee}vnd</p>
                                             </div>
                                             <div className="total_price">
                                                 <label className="total_price_label">Tổng giá trị đơn hàng</label>
-                                                <p className="total_value">22000vnd</p>
+                                                <div className="value_wrapper">
+                                                    <p className="total_value">{totalOrderPrice}vnd</p>
+                                                    <p className={` ${discountAmount == 0 ? 'd-none' : 'value_before_discount' } `}>{originalOrderPrice}vnd</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
